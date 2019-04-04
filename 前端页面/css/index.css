@@ -1,0 +1,124 @@
+/*鏉烆喗鎸遍崶锟�*/
+.swiper-container {
+    font-size: 0px;
+}
+.swiper-wrapper img {
+    width: 100%;
+}
+.swiper-pagination-bullet {
+    background-color: #FFF;
+    opacity: .5;
+}
+.swiper-pagination-bullet-active {
+    background-color: #FFF;
+    opacity: 1;
+}
+
+/* news */
+#swiper2 {
+    height: 25px;
+    margin-left: 10px;
+}
+#swiper2 a {
+    color: black;
+    font-size: 16px;
+}
+.news {
+    margin-top: 0;
+}
+.news .weui-cell__hd img {
+    width: 25px;
+}
+
+/* main */
+.main .content-jh ul:nth-child(n+2) li{
+    margin-top: 10px;
+}
+.main .weui-cell__hd {
+    font-size: 0.3rem;
+    /*margin-right: 10px;*/
+}
+.main .weui-cell__hd ul li{
+    width: 0.52rem;
+    height: 0.52rem;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 0.52rem;
+    color: #fff;
+    margin-right: 0.05rem;
+    float: left;
+}
+.main .new-jh .weui-cell__hd ul li{
+    background-color: #0084d3;
+}
+.main .old-jh .weui-cell__hd ul li{
+    background-color: #16c03d;
+}
+.main .weui-cell__bd {
+    font-size: 0.24rem;
+}
+.main .content-jh .weui-cell__bd p{
+    float: left;
+    width: 0.55rem;
+    height: 0.55rem;
+    text-align: center;
+    line-height: 0.55rem;
+    color: #fff;
+    margin-right: 0.05rem;
+}
+.main .new-jh .weui-cell__bd p{
+    background-color: #0084d3;
+}
+.main .old-jh .weui-cell__bd p{
+    background-color: #16c03d;
+}
+.main .weui-cell__bd span{
+    color: #a8b2be;
+    line-height: 0.55rem;
+    height: 0.55rem;
+    padding: 0 5px;
+    float: left;
+    border: 1px solid #afb1b5;
+    text-align: center;
+    box-sizing: border-box;
+}
+.main .weui-cell__bd ul li {
+    width: 0.52rem;
+    height: 0.52rem;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background-color: #0084d3;
+    text-align: center;
+    line-height: 0.52rem;
+    color: #fff;
+    margin-right: 0.05rem;
+    float: left;
+}
+.main .weui-cell__ft {
+    font-size: 0.24rem;
+}
+
+.main .header-jh .weui-cell__bd {
+    color:#a8b2be;
+}
+.main .header-jh .weui-cell__ft {
+    color:#ee170c;
+}
+.main .content-jh .weui-cell__bd {
+    margin-left: 0.1rem;
+}
+.main .footer-jh .weui-cell__bd p{
+    color: #a8b2be;
+    font-size: 0.3rem;
+    float: left;
+    margin:0 10px 10px 0;
+}
+.main .footer-jh .weui-cell__bd ul{
+    float: left;
+}
+.main .footer-jh .weui-cell__bd ul li{
+    background: #eb0a0a;
+}

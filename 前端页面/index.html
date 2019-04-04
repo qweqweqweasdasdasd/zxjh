@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>在线计划</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <!-- 导入vue包 -->
+    <link rel="stylesheet" href="./css/weui.min.css">
+    <link rel="stylesheet" href="./css/jquery-weui.min.css">
+    <!-- <link rel="stylesheet" href="https://rpwin.com/css/Hui-iconfont/1.0.8/iconfont.min.css"> -->
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/mobile.js"></script>
+    <script src="./js/vue.js"></script>
+    <script src="./js/vue-resource.min.js"></script>
+</head>
+<body>
+    <!--轮播图-->
+	<div class="swiper-container" id="swiper1">
+	    <div class="swiper-wrapper">
+	        <div class="swiper-slide">
+	            <img src="img/banner1.jpg" alt="">
+	        </div>
+	        <div class="swiper-slide">
+	            <img src="img/banner2.jpg" alt="">
+	        </div>
+	        <div class="swiper-slide">
+	            <img src="img/banner3.jpg" alt="">
+	        </div>
+	    </div>
+	    <!-- 如果需要分页器 -->
+	    <div class="swiper-pagination" id="swiper-pagination1"></div>
+	</div>
+	<div class="weui-cells news">
+	    <div class="weui-cell">
+	        <div class="weui-cell__hd"><img src="img/news.png" alt=""></div>
+	        <div class="weui-cell__bd">
+	            <div class="swiper-container" id="swiper2">
+	                <div class="swiper-wrapper">
+	                    <div class="swiper-slide">
+	                        <a href="#">自己也可以成为代理赚钱啦!</a>
+	                    </div>
+	                    <div class="swiper-slide">
+	                        <a href="#">自己也可以成为代理赚钱啦!</a>
+	                    </div>
+	                    <div class="swiper-slide">
+	                        <a href="#">自己也可以成为代理赚钱啦!</a>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
+
+    <div class="main">
+
+    <!--OG1K3-->
+    <div class="weui-cells" id="og1k3" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">一分快三</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li >{{ new_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--END OG1K3-->
+
+    <!--JLFFC-->
+    <div class="weui-cells" id="jlffc" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">一分彩(万位)</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+               <ul>
+                    <li v-for="jh in hm">{{ jh }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--END JLFFC-->
+
+    <!--JLPK10-->
+    <div class="weui-cells" id="jlpk10" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">一分赛车(冠军)</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li v-for="jh in hm">{{ jh }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--END JLFFC-->
+
+    <!-- OG3K3 -->
+    <div class="weui-cells" id="og3k3" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">三分块三</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li>{{ new_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- TSFFC -->
+    <div class="weui-cells" id="tsffc" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">三分彩(万位)</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li v-for="jh in hm">{{ jh }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- TSPK10 -->
+    <div class="weui-cells" id="tspk10" v-show="kjhm">
+        <div class="weui-cell header-jh" >
+            <div class="weui-cell__hd">三分赛车(冠军)</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li v-for="jh in hm">{{ jh }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- OG5K3 -->
+    <div class="weui-cells" id="og5k3" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">五分快三</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li>{{ new_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- TFFFC -->
+    <div class="weui-cells" id="tfffc" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">五分彩(万位)</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li v-for="jh in hm">{{ jh }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- TFPK10 -->
+    <div class="weui-cells" id="tfpk10" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">五分赛车(冠军)</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li v-for="jh in hm">{{ jh }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- OG10K3 -->
+    <div class="weui-cells" id="og10k3" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">十分快三</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li>{{ new_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- OG10FFC -->
+    <div class="weui-cells" id="og10ffc" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">十分彩(万位)</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li v-for="jh in hm">{{ jh }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- OG10PK10 -->
+    <div class="weui-cells" id="og10pk10" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">十分赛车(冠军)</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li v-for="jh in hm">{{ jh }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+     <!-- bjpk10 -->
+    <div class="weui-cells" id="bjpk10" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">北京pk10(万位)</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li v-for="jh in hm">{{ jh }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+     <!-- GD11X5 -->
+    <div class="weui-cells" id="gd11x5" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">广州十一选五(第一球)</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li v-for="jh in hm">{{ jh }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+     <!-- jsk3 -->
+    <div class="weui-cells" id="jsk3" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">江苏快三(第一位)</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li v-for="jh in hm">{{ jh }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- cqssc -->
+    <div class="weui-cells" id="cqssc" v-show="kjhm">
+        <div class="weui-cell header-jh">
+            <div class="weui-cell__hd">重庆时时彩(万位)</div>
+            <div class="weui-cell__bd">{{ xqs }}期 等开</div>
+            <div class="weui-cell__ft">距开奖时间 00:00</div>
+        </div>
+        <div class="weui-cell content-jh new-jh" v-show="new_jh">
+            <div class="weui-cell__hd" v-show="new_jh.hm">
+                <ul>
+                    <li v-for="jh in hm">{{ jh }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd" v-show="new_jh.hm">
+                <p>新</p>
+                <span>{{ new_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell content-jh old-jh" v-show="old_jh">
+            <div class="weui-cell__hd">
+                <ul>
+                    <li>{{ old_jh.hm }}</li>
+                </ul>
+            </div>
+            <div class="weui-cell__bd">
+                <p>老</p>
+                <span>{{ old_jh.bs }}倍</span>
+            </div>
+        </div>
+        <div class="weui-cell footer-jh">
+            <div class="weui-cell__bd">
+                <p>{{ qs }}期开奖号码</p>
+                <ul>
+                    <li v-for="v in kjhm">{{ v }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+    <div style="height:55px;"></div>
+    <footer>
+        <div class="weui-tabbar">
+            <a href="" target="_black" class="weui-tabbar__item weui-bar__item_on">
+                <i class="weui-tabbar__icon Hui-iconfont Hui-iconfont-kefu"></i>
+                <p class="weui-tabbar__label">平台客服</p>
+            </a>
+            <a href="" target="_black" class="weui-tabbar__item weui-bar__item_on">
+                <i class="weui-tabbar__icon Hui-iconfont Hui-iconfont-fabu"></i>
+                <p class="weui-tabbar__label">平台登入</p>
+            </a>
+            <a href="javascript:;" onclick="$.alert('请联系导师注册!','温馨提示')" class="weui-tabbar__item weui-bar__item_on">
+                <i class="weui-tabbar__icon Hui-iconfont Hui-iconfont-user2"></i>
+                <p class="weui-tabbar__label">平台注册</p>
+            </a>
+        </div>
+    </footer>
+</body>
+</html>
+<script src="./js/jquery.min.js"></script>
+<script src="./js/jquery-weui.min.js"></script>
+<script src="./js/swiper.min.js"></script>
+<script>
+	 $(function (){
+        $('#swiper1').swiper({
+            loop: true,
+            autoplay: 3000,
+            autoplayDisableOnInteraction: false,
+            pagination : '#swiper-pagination1',
+        });
+        $('#swiper2').swiper({
+            loop: true,
+            autoplay: 3000,
+            autoplayDisableOnInteraction: false,
+            direction: 'vertical',
+            height: 25,
+            grabCursor: true,
+            pagination : '#swiper-pagination2',
+        });
+        
+        
+        if ("WebSocket" in window) {
+            //打开一个 WebSocket
+            var wss = new WebSocket("ws://17gma9.com:8080");
+            
+            wss.onopen = function(evt) {  
+              wss.send("link");
+            };
+
+            wss.onmessage = function (evt){
+
+                if(evt.data != 'ping'){
+                    $.each(JSON.parse(evt.data),function(i,d){
+                        WriteMessage(d)
+                    })
+                }
+            };
+        }else{
+            alert("您的浏览器不支持 WebSocket");
+        }
+        setInterval(function(){
+            wss.send('ping');
+        }, 30000);
+    });
+
+
+
+    //全局定时器 ID
+    var pageTimer = {};
+
+    /* 倒计时(分:秒) */
+    function resetTime(obj, time){
+        var t = time;
+        var m = 0;
+        var s = 0;
+        var timer;
+        var str;
+        if (pageTimer[obj] !== undefined ) {
+            clearInterval(pageTimer[obj]);
+            delete pageTimer[obj];
+        }
+        function countDown(){
+            if (t == 0){
+                clearInterval(timer);
+                str = '开奖中';
+            } else {
+                t--;
+                if (t == 0){
+                    clearInterval(timer);
+                    str = '开奖中';
+                } else {
+                    m = Math.floor(t/60%60);
+                    m < 10 && (m = '0' + m);
+                    s = Math.floor(t%60);
+                    s < 10 && (s = '0' + s);
+                    str = '距开奖时间 ' + m + ':' + s;
+                }
+            }
+            $('#'+ obj +' .header-jh .weui-cell__ft').html(str);
+            return true;
+        }
+        timer = setInterval(countDown, 1000);
+        pageTimer[obj] = timer;
+    }
+
+
+    //OG1K3
+    var og1k3 = new Vue({
+        el: '#og1k3',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+        }
+    });
+    //jlffc
+    var jlffc = new Vue({
+        el: '#jlffc',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+            hm:''
+        }
+    });
+    //jlffc
+    var jlpk10 = new Vue({
+        el: '#jlpk10',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+            hm:''
+        }
+    });
+
+
+    //OG3K3
+    var og3k3 = new Vue({
+        el: '#og3k3',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+        }
+    });
+    //TSFFC
+    var tsffc = new Vue({
+        el: '#tsffc',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+            hm:''
+        }
+    });
+    //TSPK10
+    var tspk10 = new Vue({
+        el: '#tspk10',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+            hm:''
+        }
+    });
+
+
+    //og5k3
+    var og5k3 = new Vue({
+        el: '#og5k3',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+        }
+    });
+    //tfffc
+    var tfffc = new Vue({
+        el: '#tfffc',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+            hm:''
+        }
+    });
+    //tfpk10
+    var tfpk10 = new Vue({
+        el: '#tfpk10',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+            hm:''
+        }
+    });
+    
+    //OG10K3
+    var og10k3 = new Vue({
+        el: '#og10k3',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+        }
+    });
+    //OG10FFC
+    var og10ffc = new Vue({
+        el: '#og10ffc',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+            hm:''
+        }
+    });
+    //OG10PK10
+    var og10pk10 = new Vue({
+        el: '#og10pk10',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+            hm:''
+        }
+    });
+
+    //bjpk10
+    var bjpk10 = new Vue({
+        el: '#bjpk10',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+            hm:''
+        }
+    });
+
+    //GD11X5
+    var gd11x5 = new Vue({
+        el: '#gd11x5',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+            hm:''
+        }
+    });
+
+    //jsk3
+    var jsk3 = new Vue({
+        el: '#jsk3',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+            hm:''
+        }
+    });
+
+    //cqssc
+    var cqssc = new Vue({
+        el: '#cqssc',
+        data: {
+            qs: '',
+            xqs : '',
+            kjhm: '',
+            new_jh: '',
+            old_jh: '',
+            hm:''
+        }
+    });
+
+    function WriteMessage(txt){
+
+        var Msg = txt;
+        // try {
+        //     Msg = eval("("+ txt +")");
+        // } catch(e){ return; }
+        //OG1K3,JLFFC,JLPK10
+        switch (Msg.type){
+        
+            case 'og1k3':
+                og1k3.kjhm = Msg.kjhm;
+                og1k3.qs = Msg.qs;
+                og1k3.xqs = Msg.xqs;
+                og1k3.new_jh = Msg.new_jh;
+                og1k3.old_jh = Msg.old_jh;
+                resetTime(Msg.type, Msg.time);
+                break;
+            case 'jlffc':
+                jlffc.kjhm = Msg.kjhm;
+                jlffc.qs = Msg.qs;
+                jlffc.xqs = Msg.xqs;
+                jlffc.new_jh = Msg.new_jh;
+                jlffc.old_jh = Msg.old_jh;
+                jlffc.hm = JSON.parse(Msg.new_jh.hm);
+                resetTime(Msg.type, Msg.time);
+                break;
+            case 'jlpk10':
+                jlpk10.kjhm = Msg.kjhm;
+                jlpk10.qs = Msg.qs;
+                jlpk10.xqs = Msg.xqs;
+                jlpk10.new_jh = Msg.new_jh;
+                jlpk10.old_jh = Msg.old_jh;
+                jlpk10.hm = JSON.parse(Msg.new_jh.hm);
+                resetTime(Msg.type, Msg.time);
+                break;
+
+
+            //OG3K3,TSFFC,TSPK10
+            case 'og3k3':
+                og3k3.kjhm = Msg.kjhm;
+                og3k3.qs = Msg.qs;
+                og3k3.xqs = Msg.xqs;
+                og3k3.new_jh = Msg.new_jh;
+                og3k3.old_jh = Msg.old_jh;
+                resetTime(Msg.type, Msg.time);
+                break;
+            case 'tsffc':
+                tsffc.kjhm = Msg.kjhm;
+                tsffc.qs = Msg.qs;
+                tsffc.xqs = Msg.xqs;
+                tsffc.new_jh = Msg.new_jh;
+                tsffc.old_jh = Msg.old_jh;
+                tsffc.hm = JSON.parse(Msg.new_jh.hm);
+                resetTime(Msg.type, Msg.time);
+                break;
+            case 'tspk10':
+                tspk10.kjhm = Msg.kjhm;
+                tspk10.qs = Msg.qs;
+                tspk10.xqs = Msg.xqs;
+                tspk10.new_jh = Msg.new_jh;
+                tspk10.old_jh = Msg.old_jh;
+                tspk10.hm = JSON.parse(Msg.new_jh.hm);
+                resetTime(Msg.type, Msg.time);
+                break;
+
+            //OG5K3,TFFFC,TFPK10
+            case 'og5k3':
+                og5k3.kjhm = Msg.kjhm;
+                og5k3.qs = Msg.qs;
+                og5k3.xqs = Msg.xqs;
+                og5k3.new_jh = Msg.new_jh;
+                og5k3.old_jh = Msg.old_jh;
+                resetTime(Msg.type, Msg.time);
+                break;
+            case 'tfffc':
+                tfffc.kjhm = Msg.kjhm;
+                tfffc.qs = Msg.qs;
+                tfffc.xqs = Msg.xqs;
+                tfffc.new_jh = Msg.new_jh;
+                tfffc.old_jh = Msg.old_jh;
+                tfffc.hm = JSON.parse(Msg.new_jh.hm);
+                resetTime(Msg.type, Msg.time);
+                break;
+            case 'tfpk10':
+                tfpk10.kjhm = Msg.kjhm;
+                tfpk10.qs = Msg.qs;
+                tfpk10.xqs = Msg.xqs;
+                tfpk10.new_jh = Msg.new_jh;
+                tfpk10.old_jh = Msg.old_jh;
+                tfpk10.hm = JSON.parse(Msg.new_jh.hm);
+                resetTime(Msg.type, Msg.time);
+                break;
+
+            //OG10K3,OG10FFC,OG10PK10
+            case 'og10k3':
+                og10k3.kjhm = Msg.kjhm;
+                og10k3.qs = Msg.qs;
+                og10k3.xqs = Msg.xqs;
+                og10k3.new_jh = Msg.new_jh;
+                og10k3.old_jh = Msg.old_jh;
+                resetTime(Msg.type, Msg.time);
+                break;
+            case 'og10ffc':
+                og10ffc.kjhm = Msg.kjhm;
+                og10ffc.qs = Msg.qs;
+                og10ffc.xqs = Msg.xqs;
+                og10ffc.new_jh = Msg.new_jh;
+                og10ffc.old_jh = Msg.old_jh;
+                og10ffc.hm = JSON.parse(Msg.new_jh.hm);
+                resetTime(Msg.type, Msg.time);
+                break;
+            case 'og10pk10':
+                og10pk10.kjhm = Msg.kjhm;
+                og10pk10.qs = Msg.qs;
+                og10pk10.xqs = Msg.xqs;
+                og10pk10.new_jh = Msg.new_jh;
+                og10pk10.old_jh = Msg.old_jh;
+                og10pk10.hm = JSON.parse(Msg.new_jh.hm);
+                resetTime(Msg.type, Msg.time);
+                break;
+
+            //bjpk10 GD11X5
+            case 'bjpk10':
+                bjpk10.kjhm = Msg.kjhm;
+                bjpk10.qs = Msg.qs;
+                bjpk10.xqs = Msg.xqs;
+                bjpk10.new_jh = Msg.new_jh;
+                bjpk10.hm = JSON.parse(Msg.new_jh.hm);
+                bjpk10.old_jh = Msg.old_jh;
+                resetTime(Msg.type, Msg.time);
+                break;
+            case 'gd11x5':
+                gd11x5.kjhm = Msg.kjhm;
+                gd11x5.qs = Msg.qs;
+                gd11x5.xqs = Msg.xqs;
+                gd11x5.new_jh = Msg.new_jh;
+                gd11x5.hm = JSON.parse(Msg.new_jh.hm);
+                gd11x5.old_jh = Msg.old_jh;
+                resetTime(Msg.type, Msg.time);
+                break;
+            case 'jsk3':
+                jsk3.kjhm = Msg.kjhm;
+                jsk3.qs = Msg.qs;
+                jsk3.xqs = Msg.xqs;
+                jsk3.new_jh = Msg.new_jh;
+                jsk3.hm = JSON.parse(Msg.new_jh.hm);
+                jsk3.old_jh = Msg.old_jh;
+                resetTime(Msg.type, Msg.time);
+                break;
+            case 'cqssc':
+                cqssc.kjhm = Msg.kjhm;
+                cqssc.qs = Msg.qs;
+                cqssc.xqs = Msg.xqs;
+                cqssc.new_jh = Msg.new_jh;
+                cqssc.hm = JSON.parse(Msg.new_jh.hm);
+                cqssc.old_jh = Msg.old_jh;
+                resetTime(Msg.type, Msg.time);
+                break;
+        }
+    }
+</script>
