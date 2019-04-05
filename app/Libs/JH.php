@@ -64,7 +64,7 @@ class JH
 					$this->bjpk10($d);
 					return ;
 				case 'jsk3':	//单双 JSK3
-					$this->bjpk10($d);	//第一个号码
+					$this->WinOrNwin($d);	//第一个号码
 					return ;
 				case 'gd11x5':	//单双 GD11X5 第一个球
 					$this->bjpk10($d);
@@ -121,7 +121,7 @@ class JH
 			case 'cqssc':	//单双 CQSSC
 				return !!(zxjh::create(['hm'=>Tools::RoundNum(0,9,5),'type'=>$type]));
 			case 'jsk3':	//单双 JSK3
-				return !!(zxjh::create(['hm'=>Tools::RoundNum(1,6,3),'type'=>$type]));
+				return !!(zxjh::create(['hm'=>Tools::RoundOE(),'type'=>$type]));
 			case 'gd11x5':	//单双 GD11X5
 				return !!(zxjh::create(['hm'=>Tools::RoundNum(1,11,5),'type'=>$type]));
 
