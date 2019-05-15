@@ -9,7 +9,7 @@ namespace App\Libs;
 class Tools 
 {
 	protected static $arr = ['单','双','双','单','双','单'];
-	protected static $bs  = [1,3,8,24,72];
+	protected static $bs  = [1,3,8,24,72,216,648,1944,5832,17496,52488,157464,472392,1417176,4251528,12754584,38263752,114791256,344373768];
 
 	//随机生成单双
 	public static function RoundOE()

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,49 +19,49 @@
 </head>
 <body>
     <!--轮播图-->
-	<div class="swiper-container" id="swiper1">
-	    <div class="swiper-wrapper">
-	        <div class="swiper-slide">
-	            <img src="img/banner1.jpg" alt="">
-	        </div>
-	        <div class="swiper-slide">
-	            <img src="img/banner2.jpg" alt="">
-	        </div>
-	        <div class="swiper-slide">
-	            <img src="img/banner3.jpg" alt="">
-	        </div>
-	    </div>
-	    <!-- 如果需要分页器 -->
-	    <div class="swiper-pagination" id="swiper-pagination1"></div>
-	</div>
-	<div class="weui-cells news">
-	    <div class="weui-cell">
-	        <div class="weui-cell__hd"><img src="img/news.png" alt=""></div>
-	        <div class="weui-cell__bd">
-	            <div class="swiper-container" id="swiper2">
-	                <div class="swiper-wrapper">
-	                    <div class="swiper-slide">
-	                        <a href="#">自己也可以成为代理赚钱啦!</a>
-	                    </div>
-	                    <div class="swiper-slide">
-	                        <a href="#">自己也可以成为代理赚钱啦!</a>
-	                    </div>
-	                    <div class="swiper-slide">
-	                        <a href="#">自己也可以成为代理赚钱啦!</a>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</div>
-	
+    <div class="swiper-container" id="swiper1">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="img/banner1.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="img/banner2.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="img/banner3.jpg" alt="">
+            </div>
+        </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination" id="swiper-pagination1"></div>
+    </div>
+    <div class="weui-cells news">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><img src="img/news.png" alt=""></div>
+            <div class="weui-cell__bd">
+                <div class="swiper-container" id="swiper2">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <a href="#">自己也可以成为代理赚钱啦!</a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="#">自己也可以成为代理赚钱啦!</a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="#">自己也可以成为代理赚钱啦!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
     <div class="main">
 
     <!--OG1K3-->
     <div class="weui-cells" id="og1k3" v-show="kjhm">
         <div class="weui-cell header-jh">
-            <div class="weui-cell__hd">一分快三</div>
+            <div class="weui-cell__hd">一分快三(单双)</div>
             <div class="weui-cell__bd">{{ xqs }}期 等开</div>
             <div class="weui-cell__ft">距开奖时间 00:00</div>
         </div>
@@ -180,14 +181,14 @@
     <!-- OG3K3 -->
     <div class="weui-cells" id="og3k3" v-show="kjhm">
         <div class="weui-cell header-jh">
-            <div class="weui-cell__hd">三分块三</div>
+            <div class="weui-cell__hd">三分块三(单双)</div>
             <div class="weui-cell__bd">{{ xqs }}期 等开</div>
             <div class="weui-cell__ft">距开奖时间 00:00</div>
         </div>
         <div class="weui-cell content-jh new-jh" v-show="new_jh">
             <div class="weui-cell__hd" v-show="new_jh.hm">
                 <ul>
-                    <li>{{ new_jh.hm }}</li>
+                    <li >{{ new_jh.hm }}</li>
                 </ul>
             </div>
             <div class="weui-cell__bd" v-show="new_jh.hm">
@@ -295,7 +296,7 @@
     <!-- OG5K3 -->
     <div class="weui-cells" id="og5k3" v-show="kjhm">
         <div class="weui-cell header-jh">
-            <div class="weui-cell__hd">五分快三</div>
+            <div class="weui-cell__hd">五分快三(单双)</div>
             <div class="weui-cell__bd">{{ xqs }}期 等开</div>
             <div class="weui-cell__ft">距开奖时间 00:00</div>
         </div>
@@ -410,7 +411,7 @@
     <!-- OG10K3 -->
     <div class="weui-cells" id="og10k3" v-show="kjhm">
         <div class="weui-cell header-jh">
-            <div class="weui-cell__hd">十分快三</div>
+            <div class="weui-cell__hd">十分快三(单双)</div>
             <div class="weui-cell__bd">{{ xqs }}期 等开</div>
             <div class="weui-cell__ft">距开奖时间 00:00</div>
         </div>
@@ -525,7 +526,7 @@
      <!-- bjpk10 -->
     <div class="weui-cells" id="bjpk10" v-show="kjhm">
         <div class="weui-cell header-jh">
-            <div class="weui-cell__hd">北京pk10(万位)</div>
+            <div class="weui-cell__hd">北京pk10(冠军)</div>
             <div class="weui-cell__bd">{{ xqs }}期 等开</div>
             <div class="weui-cell__ft">距开奖时间 00:00</div>
         </div>
@@ -564,7 +565,7 @@
      <!-- GD11X5 -->
     <div class="weui-cells" id="gd11x5" v-show="kjhm">
         <div class="weui-cell header-jh">
-            <div class="weui-cell__hd">广州十一选五(第一球)</div>
+            <div class="weui-cell__hd">广州十一选五(万位)</div>
             <div class="weui-cell__bd">{{ xqs }}期 等开</div>
             <div class="weui-cell__ft">距开奖时间 00:00</div>
         </div>
@@ -602,14 +603,14 @@
      <!-- jsk3 -->
     <div class="weui-cells" id="jsk3" v-show="kjhm">
         <div class="weui-cell header-jh">
-            <div class="weui-cell__hd">江苏快三(第一位)</div>
+            <div class="weui-cell__hd">江苏快三(单双)</div>
             <div class="weui-cell__bd">{{ xqs }}期 等开</div>
             <div class="weui-cell__ft">距开奖时间 00:00</div>
         </div>
         <div class="weui-cell content-jh new-jh" v-show="new_jh">
             <div class="weui-cell__hd" v-show="new_jh.hm">
                 <ul>
-                    <li v-for="jh in hm">{{ jh }}</li>
+                    <li>{{ new_jh.hm }}</li>
                 </ul>
             </div>
             <div class="weui-cell__bd" v-show="new_jh.hm">
@@ -640,7 +641,7 @@
     <!-- cqssc -->
     <div class="weui-cells" id="cqssc" v-show="kjhm">
         <div class="weui-cell header-jh">
-            <div class="weui-cell__hd">重庆时时彩(万位)</div>
+            <div class="weui-cell__hd">欢乐生肖(万位)</div>
             <div class="weui-cell__bd">{{ xqs }}期 等开</div>
             <div class="weui-cell__ft">距开奖时间 00:00</div>
         </div>
@@ -701,7 +702,7 @@
 <script src="./js/jquery-weui.min.js"></script>
 <script src="./js/swiper.min.js"></script>
 <script>
-	 $(function (){
+     $(function (){
         $('#swiper1').swiper({
             loop: true,
             autoplay: 3000,
@@ -730,6 +731,7 @@
             wss.onmessage = function (evt){
 
                 if(evt.data != 'ping'){
+
                     $.each(JSON.parse(evt.data),function(i,d){
                         WriteMessage(d)
                     })
@@ -740,7 +742,7 @@
         }
         setInterval(function(){
             wss.send('ping');
-        }, 30000);
+        }, 5000);
     });
 
 
@@ -988,6 +990,7 @@
         // try {
         //     Msg = eval("("+ txt +")");
         // } catch(e){ return; }
+        //debugger;
         //OG1K3,JLFFC,JLPK10
         switch (Msg.type){
         
@@ -1019,7 +1022,7 @@
                 break;
 
 
-            //OG3K3,TSFFC,TSPK10
+            // //OG3K3,TSFFC,TSPK10
             case 'og3k3':
                 og3k3.kjhm = Msg.kjhm;
                 og3k3.qs = Msg.qs;
@@ -1103,7 +1106,7 @@
                 resetTime(Msg.type, Msg.time);
                 break;
 
-            //bjpk10 GD11X5
+            // //bjpk10 GD11X5
             case 'bjpk10':
                 bjpk10.kjhm = Msg.kjhm;
                 bjpk10.qs = Msg.qs;
@@ -1127,7 +1130,6 @@
                 jsk3.qs = Msg.qs;
                 jsk3.xqs = Msg.xqs;
                 jsk3.new_jh = Msg.new_jh;
-                jsk3.hm = JSON.parse(Msg.new_jh.hm);
                 jsk3.old_jh = Msg.old_jh;
                 resetTime(Msg.type, Msg.time);
                 break;

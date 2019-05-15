@@ -29,7 +29,7 @@ class WorkermanHandler
       
       // $data = $zxjh->RefreshGetData();  //获取数据
 
-      // $connection->uid = ++$global_uid;
+      $connection->uid = ++$global_uid;
       // foreach($text_worker->connections as $conn){
       //   $conn->send("link---000");
       // }
@@ -48,34 +48,39 @@ class WorkermanHandler
 
     //当客户端发送消息过来时,转发给所有人
     public function handle_message($connection,$data){
-      global $text_worker;
+      global $text_worker, $global_uid;
       switch ($data) {
         case 'link':
-      
+          $connection->uid = time() . mt_rand(00000,99999);
           //从数据库内拿数据,,每个彩种最新的数据,拿去一条,判断是否重复拿 
           //echo 'ping';
           $zxjh = new \App\Http\Controllers\Api\ZxjhController();
           //app('log')->info(date('Y-m-d H:i:s',time()).'实时获取数据api');
-          
           $data = $zxjh->everyGetData(false);  //获取数据
+          
+          //foreach($text_worker->connections as $conn){
+          $connection->send("$data");
 
-          foreach($text_worker->connections as $conn){
-            $conn->send("$data");
-          }
-          break;
+          //}
+         return;
         
         case 'ping':
  
           //从数据库内拿数据,,每个彩种最新的数据,拿去一条,判断是否重复拿 
           //echo 'ping';
           $zxjh = new \App\Http\Controllers\Api\ZxjhController();
-          //app('log')->info(date('Y-m-d H:i:s',time()).'实时获取数据api');
-          
+              
           $data = $zxjh->everyGetData();  //获取数据
-          foreach($text_worker->connections as $conn){
-            $conn->send("$data");
+          
+          if(!is_null($data)){
+            //app('log')->info(date('Y-m-d H:i:s',time()).json_encode($data));
+            foreach($text_worker->connections as $conn){
+              app('log')->info(date('Y-m-d H:i:s',time()).'循环体内::'.json_encode($data));
+              $conn->send("$data");
+            }
           }
-          break;
+
+          return 'none';
       }
   
     }

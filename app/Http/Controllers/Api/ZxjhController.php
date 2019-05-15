@@ -44,21 +44,103 @@ class ZxjhController extends Controller
 	protected $code05 = 'OG5K3,TFFFC,TFPK10';			//5分快3 	5分彩 		5分赛车
 	protected $code10 = 'OG10K3,OG10FFC,OG10PK10';		//10分快3 	10分彩 		10分赛车
 	protected $code20 = 'BJPK10,CQSSC,JSK3,GD11X5';		//北京赛车 	重庆时时彩 	江苏快三   广东十一选五 
+
+  protected $code   = 'OG1K3,JLFFC,JLPK10,OG3K3,TSFFC,TSPK10,OG5K3,TFFFC,TFPK10,OG10K3,OG10FFC,OG10PK10,BJPK10,CQSSC,JSK3,GD11X5';
 	
 
-	public function __construct()
+	public function __construct() 
 	{
 		$this->client = new \GuzzleHttp\Client();
 	}
+
+    //实时更新数据
+    public function realTimeUpdate()
+    {
+      $jh = new JH();
+      //请求获取到数据
+      $response = $this->client->request('GET', "{$this->domain}?token=4TeMEVEr8koP1pgowrQB&format={$this->format}&rows={$this->row}&code={$this->code}");
+
+      $data = json_decode($response->getBody(),true);
+      
+       //写入数据库
+        if($data['rows']){
+            $newData = [];
+            foreach ($data['data'] as $k => $v) {
+               
+                if( Cache::store('file')->get($v['code'].'-'.$v['expect']) != $v['expect'] ){
+
+                    $newData[$k]['type'] = $v['code'];
+                    $newData[$k]['kjhm'] = $v['opencode'];
+                    $newData[$k]['xqs'] = str_pad(((substr($v['expect'],-4))+1),4,"0",STR_PAD_LEFT);    //0000  假期数
+                    $newData[$k]['qs'] = substr($v['expect'],-4);  
+                    $newData[$k]['opentime'] = $v['opentime'];
+                    $newData[$k]['time'] = $this->kjtime($v['code']);   
+                    $newData[$k]['created_at'] = date('Y-m-d H:i:s',time()); 
+
+                    $a = DB::table('kj')->insert($newData[$k]);
+                    $jh->makejh($newData[$k]);
+
+                    Cache::store('file')->put( $v['code'].'-'.$v['expect'] , $v['expect'] ,30);         //保存缓存
+                }
+
+            }
+           //app('log')->info(json_encode($newData));
+        }
+    }
+
+
+
+    //开奖时间函数
+    public function kjtime($type)
+    {
+      switch ($type) {
+        case 'og1k3':
+          return '60';
+        case 'jlffc':
+          return '60';
+        case 'jlpk10':
+          return '60';
+
+        case 'og3k3':
+          return '180';
+        case 'tsffc':
+          return '180';
+        case 'tspk10':
+          return '180';
+
+        case 'og5k3':
+          return '300';
+        case 'tfffc':
+          return '300';
+        case 'tfpk10':
+          return '300';
+
+        case 'og10k3':
+          return '600';
+        case 'og10ffc':
+          return '600';
+        case 'og10pk10':
+          return '600';
+
+        case 'bjpk10':
+          return '1200';
+        case 'cqssc':
+          return '1200';
+        case 'jsk3':
+          return '1200';
+        case 'gd11x5':
+          return '1200';
+      }
+    }
 
     //每个一分钟执行   //实现逻辑的地方 //定时任务请求数据 分开 //上期的处理 //
     public function everyMinuteTodo()
     {
       //$data = '{"remain":"","rows":65,"data":[{"code":"og1k3","expect":"201903300817","opencode":"1,2,5","opentime":"2019-03-30 13:37:04","opentimestamp":"1553924225"}]}';
-      sleep(6);
+      sleep();
       $jh = new JH();
     	//请求获取到数据
-      $response = $this->client->request('GET', "{$this->domain}?token=c3Qv5TzfTWRua56C7bbU&format={$this->format}&rows={$this->row}&code={$this->code01}");
+      $response = $this->client->request('GET', "{$this->domain}?token=4TeMEVEr8koP1pgowrQB&format={$this->format}&rows={$this->row}&code={$this->code01}");
   		$data = json_decode($response->getBody(),true);
           
           //写入数据库
@@ -70,8 +152,9 @@ class ZxjhController extends Controller
                   $newData[$k]['xqs'] = str_pad(((substr($v['expect'],-4))+1),4,"0",STR_PAD_LEFT);    //0000  假期数
                   $newData[$k]['qs'] = substr($v['expect'],-4);  
                   $newData[$k]['opentime'] = $v['opentime'];
-                  $newData[$k]['time'] = '60';
-                  app('log')->info(date('Y-m-d H:i:s',time()).'实时获取数据');
+                  $newData[$k]['time'] = '60';  
+                  $newData[$k]['created_at'] = date('Y-m-d H:i:s',time()); 
+                  
                   $a = DB::table('kj')->insert($newData[$k]);
                   $jh->makejh($newData[$k]);
               }
@@ -81,6 +164,7 @@ class ZxjhController extends Controller
     //每分钟获取到数据
     public function everyGetData($falg = true)
     {
+      
       return $this->common_kj_jh_data(strtolower($this->code01.','.$this->code03.','.$this->code05.','.$this->code10.','.$this->code20),$falg);
     }
 
@@ -131,18 +215,25 @@ class ZxjhController extends Controller
 
         $jh = DB::table('jh')->where([ ['type',$v->type],['is_show',1] ])->first();
 
+        $tag = false;
          if($tag){
-            app('log')->info(Cache::store('file')->get($v->type).'-'.$v->kj_id);
-
+            //app('log')->info(Cache::store('file')->get($v->type).'-'.$v->kj_id);
             if( Cache::store('file')->get($v->type) == $v->kj_id ){
                 //echo 'ping';
+
                 continue;
               }
+              //dump($v->type.'--'.Cache::store('file')->get($v->type).'--'.$v->kj_id);
               Cache::store('file')->put($v->type, $v->kj_id, 30);  //保存缓存
           }
+
+        if($v->time == 1200){
+          $v->time = (1200-110);
+        }
         $data[$k] = [
           'type' => $v->type,
-          'time' => $v->time,
+          'time' => abs(substr(((strtotime($v->created_at) + $v->time - 5) - time()),-4)),    //(数据入款时间 + 间隔时间) - 当前时间  秒
+          'dt' => strtotime($v->created_at) .'+'. $v->time .'-'. time().'+'.substr(((strtotime($v->created_at) + $v->time) - time()),-4),
           'kjhm' => explode(',', $v->kjhm),
           'qs' => $v->qs,
           'xqs' => $v->xqs,
@@ -153,7 +244,7 @@ class ZxjhController extends Controller
           'old_jh' => ''
           ];
       }
-    
+
       return json_encode($data); 
     }
 
@@ -163,7 +254,7 @@ class ZxjhController extends Controller
     	$jh = new JH();
       sleep(3);
       //请求获取到数据
-      $response = $this->client->request('GET', "{$this->domain}?token=c3Qv5TzfTWRua56C7bbU&format={$this->format}&rows={$this->row}&code={$this->code03}");
+      $response = $this->client->request('GET', "{$this->domain}?token=4TeMEVEr8koP1pgowrQB&format={$this->format}&rows={$this->row}&code={$this->code03}");
       $data = json_decode($response->getBody(),true);
       
           //写入数据库
@@ -175,7 +266,8 @@ class ZxjhController extends Controller
                   $newData[$k]['xqs'] = str_pad(((substr($v['expect'],-3))+1),3,"0",STR_PAD_LEFT);    //0000  预测
                   $newData[$k]['qs'] = substr($v['expect'],-3);  
                   $newData[$k]['opentime'] = $v['opentime'];
-                  $newData[$k]['time'] = '180';
+                  $newData[$k]['time'] = '180'; 
+                  $newData[$k]['created_at'] = date('Y-m-d H:i:s',time());    
                   $a = DB::table('kj')->insert($newData[$k]);
                   $jh->makejh($newData[$k]);
               }
@@ -188,7 +280,7 @@ class ZxjhController extends Controller
     	$jh = new JH();
       sleep(3);
       //请求获取到数据
-      $response = $this->client->request('GET', "{$this->domain}?token=c3Qv5TzfTWRua56C7bbU&format={$this->format}&rows={$this->row}&code={$this->code05}");
+      $response = $this->client->request('GET', "{$this->domain}?token=4TeMEVEr8koP1pgowrQB&format={$this->format}&rows={$this->row}&code={$this->code05}");
       $data = json_decode($response->getBody(),true);
       
           //写入数据库
@@ -201,6 +293,7 @@ class ZxjhController extends Controller
                   $newData[$k]['qs'] = substr($v['expect'],-3);  
                   $newData[$k]['opentime'] = $v['opentime'];
                   $newData[$k]['time'] = '300';
+                  $newData[$k]['created_at'] = date('Y-m-d H:i:s',time());
                   $a = DB::table('kj')->insert($newData[$k]);
                   $jh->makejh($newData[$k]);
               }
@@ -214,7 +307,7 @@ class ZxjhController extends Controller
     	$jh = new JH();
       sleep(3);
       //请求获取到数据
-      $response = $this->client->request('GET', "{$this->domain}?token=c3Qv5TzfTWRua56C7bbU&format={$this->format}&rows={$this->row}&code={$this->code10}");
+      $response = $this->client->request('GET', "{$this->domain}?token=4TeMEVEr8koP1pgowrQB&format={$this->format}&rows={$this->row}&code={$this->code10}");
       $data = json_decode($response->getBody(),true);
       
           //写入数据库
@@ -227,6 +320,7 @@ class ZxjhController extends Controller
                   $newData[$k]['qs'] = substr($v['expect'],-3);  
                   $newData[$k]['opentime'] = $v['opentime'];
                   $newData[$k]['time'] = '600';
+                  $newData[$k]['created_at'] = date('Y-m-d H:i:s',time());
                   $a = DB::table('kj')->insert($newData[$k]);
                   $jh->makejh($newData[$k]);
               }
@@ -239,7 +333,7 @@ class ZxjhController extends Controller
     	$jh = new JH();
       sleep(3);
       //请求获取到数据
-      $response = $this->client->request('GET', "{$this->domain}?token=c3Qv5TzfTWRua56C7bbU&format={$this->format}&rows={$this->row}&code={$this->code20}");
+      $response = $this->client->request('GET', "{$this->domain}?token=4TeMEVEr8koP1pgowrQB&format={$this->format}&rows={$this->row}&code={$this->code20}");
       $data = json_decode($response->getBody(),true);
       
           //写入数据库
@@ -252,9 +346,34 @@ class ZxjhController extends Controller
                   $newData[$k]['qs'] = substr($v['expect'],-3);  
                   $newData[$k]['opentime'] = $v['opentime'];
                   $newData[$k]['time'] = '1200';
-                  $a = DB::table('kj')->insert($newData[$k]);
-                  $jh->makejh($newData[$k]);
+                  $newData[$k]['created_at'] = date('Y-m-d H:i:s',time());
+
+                  $key = md5($v['code'].'|'.$v['opencode']);  //彩种开奖时间
+                  if(!Cache::store('file')->get($key)){
+                    $a = DB::table('kj')->insert($newData[$k]);
+                    $jh->makejh($newData[$k]);
+                    Cache::store('file')->put($key,'1',1440); //1*24*60
+                  }
               }
           }
+    }
+
+
+    //每天晚上4点执行删除
+    public function timeToClear()
+    {
+      ignore_user_abort(true);
+      set_time_limit(0);
+
+      //查询昨天数据是否存在
+      $yesterday = date('Y-m-d H:i:s',strtotime('-2 hour'));  
+      $yesKjData = DB::table('kj')->where('created_at','<=',$yesterday)->count();
+      $yesJhData = DB::table('jh')->where('created_at','<=',$yesterday)->count();
+
+      //删除昨天之前的数据
+      if(!is_null($yesKjData) || !is_null($yesJhData)){
+          DB::table('kj')->where('created_at','<=',$yesterday)->delete();
+          DB::table('jh')->where('created_at','<=',$yesterday)->delete();
+      }
     }
 }

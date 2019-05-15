@@ -49,7 +49,7 @@ class Workerman extends Command
         
         /*$http_worker->transport = 'http';*/
         // 启动4个进程对外提供服务
-        $text_worker->count = 1;
+        $text_worker->count = 4;
         $handler = \App::make('Handler\WorkermanHandler');
         $text_worker->onConnect = array($handler,"handle_connection");
         $text_worker->onWorkerStart = array($handler,"handle_workerstart");
